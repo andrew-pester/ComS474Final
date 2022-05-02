@@ -1,21 +1,7 @@
-Put the following files in the same folder or in your PYTHONPATH
-* project3.py
-* geometry.py
-* edge.py
-* graph.py
-* obstacle.py
-* planning.py
-* queue.py
-* draw_cspace.py (This can be obtained from the course github.)
+This is built off of the previous RRT implmentation that was given
+It creates 3D objects then after being given 2 points in the W = [-5,5] x [-5, 5] x [-5, 5]
+It will avoid those objects and find a path to the goal
+There are 2 types of obstables that it will attempt to avoid 
+There are 2 cylinders and 2 cubes that the search will avoid in the path to the goal
 
-For Task 1 and Task 2, run
-
-$ python project3.py --alg rrt
-
-It will take a few seconds before showing the plot of the configuration space, the tree, and the path.
-
-For Task 3, run
-
-$ python project3.py --alg prm
-
-It will take a few seconds before showing the plot of the configuration space, the roadmap, and the path.
+$ python final.py final_desc.json

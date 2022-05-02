@@ -8,7 +8,7 @@
             "name": "Python: final",
             "type": "python",
             "request": "launch",
-            "program": "project3.py",
+            "program": "final.py",
             "console": "integratedTerminal",
             "justMyCode": true,
             "args": ["final_desc.json"]

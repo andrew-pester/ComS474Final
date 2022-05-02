@@ -6,34 +6,6 @@ import numpy as np
 class Obstacle:
     def contain(self, s):
         return False
-
-
-class CircularObstacle(Obstacle):
-    """A class representing a circular obstacle"""
-
-    def __init__(self, center, radius, theta_lim):
-        self.center = center
-        self.radius = radius
-        self.theta_min = theta_lim[0]
-        self.theta_max = theta_lim[1]
-
-    def get_boundaries(self):
-        """Return the list of coordinates (x,y) of the boundary of the obstacle"""
-        num_theta = 100
-        theta_inc = (self.theta_max - self.theta_min) / num_theta
-        theta_range = [self.theta_min + theta_inc * i for i in range(num_theta + 1)]
-        return [
-            (
-                self.radius * math.cos(theta) + self.center[0],
-                self.radius * math.sin(theta) + self.center[1],
-                0,
-            )
-            for theta in theta_range
-        ]
-
-    def contain(self, s):
-        """Return whether a point s is inside this obstacle"""
-        return is_inside_circle(self.center, self.radius, s)
         
 class CubeObstacle(Obstacle):
     """A class representing a circular obstacle"""
@@ -155,8 +127,13 @@ class CylinderObstacle(Obstacle):
         theta_inc = (self.theta_max - self.theta_min) / num_theta
         theta_range = [self.theta_min + theta_inc * i for i in range(num_theta + 1)]
         ret = []
+        count = 0
         for theta in theta_range:
+            if count%10 == 0:
+                ret.append((self.radius * math.cos(theta) + self.center[0], self.radius * math.sin(theta) + self.center[1], self.center[2] - self.height/2, ))
             ret.append((self.radius * math.cos(theta) + self.center[0], self.radius * math.sin(theta) + self.center[1], self.center[2] + self.height/2, ))
+            count = count + 1
+            
         for theta in theta_range:
             ret.append((self.radius * math.cos(theta) + self.center[0], self.radius * math.sin(theta) + self.center[1], self.center[2]-self.height/2, ))
 
@@ -206,11 +183,11 @@ class WorldBoundary3D(Obstacle):
 
 def construct_circular_obstacles(dt):
     r = 1 - dt  # the radius of the circle
-    c = [(0, -3, 1), (0, 3, 0)]  # the center of each circle
+    c = [(0, -4, 1), (0, 4, 0)]  # the center of each circle
     t = [(0, 2*math.pi), (0, 2*math.pi)]  # range of theta of each circle
     obstacles = []
-    cube =  [(0, 1.5), (1, 2), (-2, 0)]
-    cube2 =  [(0, 1.5), (-2, -1), (-2, 0)]
+    cube =  [(0, 1.5), (1.5, 2), (-2, 0)]
+    cube2 =  [(0, 1.5), (-2, 1), (-2, 0)]
     obstacles.append(CubeObstacle(cube[0],cube[1], cube[2]))
     obstacles.append(CubeObstacle(cube2[0],cube2[1], cube2[2]))
     # obstacles.append(CylinderObstacle(c, r, t, 2))
